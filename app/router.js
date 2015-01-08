@@ -5,6 +5,7 @@ var multiplayerGameRouter = require('./lib/sms-games')
   , donationsRouter = require('./lib/donations')
   , dsCampaignRouter = require('./lib/ds-routing')
   , reportback = require('./lib/reportback')
+  , config = rootRequire('app/config/configRouter')
   ;
 
 // Directs all requests to the top-level router. 
@@ -21,3 +22,6 @@ router.use('/ds-routing', dsCampaignRouter);
 
 // Standard Staff Pick campaign report back.
 router.use('/reportback', reportback);
+
+// Accepts requests to add responder config files. 
+router.use('/config', config);
