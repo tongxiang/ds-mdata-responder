@@ -6,9 +6,16 @@ var path = require('path')
   , stathat = require('stathat')
   , errorHandler = require('errorhandler')
   , bodyParser = require('body-parser')
+  , cookieParser = require('cookie-parser')
+  , swig = require('swig')
   ;
 
 module.exports = function() {
+
+  // View engine setup. 
+  app.set('views', path.join(root_dirname, 'views')); // Sets default directory for views. 
+  app.set('view engine', 'html'); // Default engine extension to use when omitted.
+  app.engine('html', swig.renderFile); // Compiles and renders a template file for final output. 
 
   // Set port variable
   app.set('port', process.env.PORT || 4711);
@@ -23,14 +30,17 @@ module.exports = function() {
   // Show all errors in development
   app.use(errorHandler());
 
-  // Add static path
+  // Parses Cookie headers. 
+  app.use(cookieParser());
+
+  // Add static path for public assets
   app.use(express.static(path.join(root_dirname, 'public')));
 
   // Set the database URI this app will use for SMS operations.
   app.set('operations-database-uri', process.env.DB_URI || 'mongodb://localhost/ds-mdata-responder');
 
   // Set the database URI this app will use to retrieve SMS config files.
-  app.set('config-database-uri', process.env.CONFIG_DB_URI || 'mongodb://localhost/config')
+  app.set('config-database-uri', process.env.CONFIG_DB_URI || 'mongodb://localhost/config');
 
   // @TODO: Find a better way of passing the host URL to SGSoloController.createSoloGame()
   // Specify app host URL. 

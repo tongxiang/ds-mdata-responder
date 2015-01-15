@@ -21,9 +21,6 @@ router.route('/')
         res.send('Eventually, maybe this will return all the config documents in a way that\'s useful for our CMS.')
       })
 
-router.route('/:configCollectionName')
-      . 
-
 router.use(function(req, res, next) {
         logger.info('Request made for configRouter with contents: ' + req.body)
       })

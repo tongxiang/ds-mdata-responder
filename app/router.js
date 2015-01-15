@@ -25,3 +25,7 @@ router.use('/reportback', reportback);
 
 // Accepts requests to add responder config files. 
 router.use('/config', config);
+
+router.get('/', function(req, res) {
+  res.render('index')
+})
