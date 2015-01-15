@@ -343,7 +343,7 @@ VIS = {
       { el: 'cmdHelp',           fn: this.help                     },
       { el: 'cmdBeer',           fn: this.beer                     }
     ].forEach(function (o) {
-      Event.addListener(o.el, 'click', o.fn, this, true); // adds event listeners to each one of the HTML elements with the specified class. Clicking on that element runs the function. 
+      Event.addListener(o.el, 'click', o.fn, this, true);
     }, this);
 
     Event.addListener(
@@ -504,7 +504,7 @@ VIS = {
     }
 
     this.clear();
-    this.data.input.value = Lang.JSON.stringify(response.query.results);
+    this.data.input.value = JSON.stringify(response.query.results);
     this.render();
   },
 
@@ -640,7 +640,7 @@ VIS = {
 
     try {
       result = this.data.inStrict.checked ?
-        Lang.JSON.parse(json) :
+        JSON.parse(json) :
         eval("(" + json + ")");
     } catch (ex) {
       result = ex;
@@ -673,7 +673,7 @@ VIS = {
       return;
     }
 
-    json = Lang.JSON.stringify(json);
+    json = JSON.stringify(json);
     this.data.output.innerHTML =
       '<pre>' + this.html(json) + '</pre>';
   },
@@ -1969,7 +1969,7 @@ VIS = {
     }
 
     return '[<span class="STRING">' +
-      this.html(Lang.JSON.stringify(s)) + '</span>]';
+      this.html(JSON.stringify(s)) + '</span>]';
   },
 
 
@@ -2117,7 +2117,7 @@ PRETTY = {
       return this.date(s, path);
     }
 
-    s = Lang.JSON.stringify(s);
+    s = JSON.stringify(s);
 
     if (VIS.data.trunc.checked && s.length > 68) {
       s = s.substring(1, s.length - 1);
@@ -2143,7 +2143,7 @@ PRETTY = {
 
   date: function (d, path) {
     return '<span id="p' + path + '" title="Date" class="DATE">' +
-      Lang.JSON.stringify(d) + '</span>';
+      JSON.stringify(d) + '</span>';
   },
 
   obj: function (o, path) {
@@ -2157,7 +2157,7 @@ PRETTY = {
 
         body.push(
           '<span id="px' + (VIS.paths.length - 1) + '">' +
-            Lang.JSON.stringify(x) + ': ' +
+            JSON.stringify(x) + ': ' +
             this.display(o[x], VIS.paths.length - 1) + '</span>'
         );
       }
@@ -2331,7 +2331,7 @@ HTML = {
 
     // Check and see if this is secretly a date
     if (VIS.data.dates.checked && VIS.dateRE.test(s)) {
-      return this.date(Lang.JSON.stringToDate(s), path);
+      return this.date(JSON.stringToDate(s), path);
     }
 
     var tag = VIS.data.preserve.checked ? 'pre' : 'span';
@@ -2945,4 +2945,4 @@ COOKIE = {
   }
 };
 
-Event.onDOMReady(VIS.init, VIS, true);
+Event.onDOMReady(VIS.init, VIS, true); // Relic of deprecated YUI library. Need to replace with JQuery. 

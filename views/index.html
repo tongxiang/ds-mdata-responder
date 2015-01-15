@@ -22,13 +22,9 @@
 
   <link rel="stylesheet" type="text/css" href="stylesheets/default.css" />
 
-  <script type="text/javascript"
-    src="javascripts/yuiloader-dom-event.js"></script>
+  <script type="text/javascript" src="javascripts/yuiloader-dom-event.js"></script>
 
-  <script type="text/javascript"
-    src="javascripts/json-min.js"></script>
-
-  <script type="text/javascript" src="javascripts/default-min.js"></script>
+  <script type="text/javascript" src="javascripts/default.js"></script>
 
 </head>
 <body>
@@ -150,6 +146,15 @@
       for="jsonInput jsonStrict jsonEval json2HTML json2JSON jsonTrunc jsonDate jsonData jsonSpace"
       id="jsonOutput"></output>
   </div>
+
+  <script>
+    var importData = {{ JSON.stringify(docs) }}
+    setTimeout(function(){
+      VIS.data.input.value = JSON.stringify(importData)
+      VIS.render()
+    }, 5000)
+
+  </script>
 
   <footer>
     <address class="vcard" style="clear: both;">

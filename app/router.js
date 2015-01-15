@@ -1,5 +1,7 @@
 var express = require('express')
-  , router = express.Router();
+  , router = express.Router()
+  , logger = rootRequire('app/lib/logger')
+  ;
 
 var multiplayerGameRouter = require('./lib/sms-games')
   , donationsRouter = require('./lib/donations')
@@ -7,6 +9,11 @@ var multiplayerGameRouter = require('./lib/sms-games')
   , reportback = require('./lib/reportback')
   , config = rootRequire('app/config/configRouter')
   ;
+
+var connectionOperations = rootRequire('app/config/connectionOperations')
+  , connectionConfig = rootRequire('app/config/connectionConfig')
+
+var competitiveStoriesConfigModel = rootRequire('app/lib/sms-games/config/competitiveStoriesConfigModel')(connectionConfig);
 
 // Directs all requests to the top-level router. 
 app.use('/', router);
@@ -27,5 +34,13 @@ router.use('/reportback', reportback);
 router.use('/config', config);
 
 router.get('/', function(req, res) {
-  res.render('index')
+  competitiveStoriesConfigModel.find({}, function(err, docs) {
+    if (err) {
+      logger.error('Error retrieving configuration documents for CMS, error: ' + err);
+    } 
+    else {
+      res.render('index', {docs: docs});
+    }
+  })
+  
 })

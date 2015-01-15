@@ -16,32 +16,32 @@ var express = require('express')
     ]
   ;
 
-router.route('/')
-      .get(function(req, res) {
-        res.send('Eventually, maybe this will return all the config documents in a way that\'s useful for our CMS.')
-      })
+// router.route('/')
+//       .get(function(req, res) {
+//         res.send('Eventually, maybe this will return all the config documents in a way that\'s useful for our CMS.')
+//       })
 
 router.use(function(req, res, next) {
         logger.info('Request made for configRouter with contents: ' + req.body)
       })
 
-      .post('/:configCollectionName', function(req, res) {
-        console.log('Config collection post request made for collection: ' + req.body.__comments);
-        findConfigCollection(req.params.configCollectionName).findOneAndUpdate({'_id': req.body._id}, req.body, { upsert: true }, function(err, doc) {
-          res.send(doc);
-          console.log('new doc: ', doc);
-        })
-      })
+      // .post('/:configCollectionName', function(req, res) {
+      //   console.log('Config collection post request made for collection: ' + req.body.__comments);
+      //   findConfigCollection(req.params.configCollectionName).findOneAndUpdate({'_id': req.body._id}, req.body, { upsert: true }, function(err, doc) {
+      //     res.send(doc);
+      //     console.log('new doc: ', doc);
+      //   })
+      // })
 
-      .delete('/:configCollectionName', function(req, res) {
-        findConfigCollection(req.params.configCollectionName).remove({
-          _id: req.body._id
-        }, function(err) {
-          if (err) {
-            logger.error('Unable to delete doc with _id ' + req.body._id + ' for configCollection: ' + req.params.configCollectionName)
-          }
-        })
-      })
+      // .delete('/:configCollectionName', function(req, res) {
+      //   findConfigCollection(req.params.configCollectionName).remove({
+      //     _id: req.body._id
+      //   }, function(err) {
+      //     if (err) {
+      //       logger.error('Unable to delete doc with _id ' + req.body._id + ' for configCollection: ' + req.params.configCollectionName)
+      //     }
+      //   })
+      // })
 
 
 
